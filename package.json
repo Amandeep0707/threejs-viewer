@@ -1,0 +1,22 @@
+{
+  "name": "threejs-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "vercel": "vercel dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vite": "^7.0.6"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.18.0",
+    "stats.js": "^0.17.0",
+    "three": "^0.178.0",
+    "tweakpane": "^4.0.5"
+  }
+}
