@@ -3,7 +3,7 @@ import EventEmitter from "./EventEmitter";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
-import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import Experience from "../core/Experience";
 
 export default class Resources extends EventEmitter {
@@ -20,9 +20,11 @@ export default class Resources extends EventEmitter {
     this.toLoad = this.sources.length;
     this.loaded = 0;
 
-    this.setLoaders();
-    this.startLoading();
-    this.setupDragAndDrop();
+    if (this.experience.gltfImporter) {
+      this.setLoaders();
+      this.startLoading();
+      this.setupDragAndDrop();
+    }
   }
 
   setLoaders() {
@@ -33,7 +35,7 @@ export default class Resources extends EventEmitter {
     this.loaders.gltfLoader.setDRACOLoader(this.dracoLoader);
     this.loaders.textureLoader = new THREE.TextureLoader();
     this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader();
-    this.loaders.environmentTextureLoader = new RGBELoader();
+    this.loaders.hdrLoader = new HDRLoader();
     this.loaders.fontLoader = new FontLoader();
   }
 
@@ -52,7 +54,7 @@ export default class Resources extends EventEmitter {
           this.sourceLoaded(source, file);
         });
       } else if (source.type === "environmentTexture") {
-        this.loaders.environmentTextureLoader.load(source.path, (file) => {
+        this.loaders.hdrLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
       } else if (source.type === "font") {
@@ -79,7 +81,7 @@ export default class Resources extends EventEmitter {
     document.addEventListener(
       "dragover",
       this.handleDragOver.bind(this),
-      false
+      false,
     );
     document.addEventListener("drop", this.handleDrop.bind(this), false);
   }

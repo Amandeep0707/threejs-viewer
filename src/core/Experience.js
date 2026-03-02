@@ -8,8 +8,7 @@ import World from "../World/World.js";
 import Debug from "../Utils/Debug.js";
 import Resources from "../Utils/Resources.js";
 import sources from "../core/sources.js";
-import PostProcess from "../core/PostProcess.js";
-import { Physics } from "../core/Physics.js";
+import RenderPipeline from "../core/PostProcess.js";
 import Grid from "../Utils/Grid.js";
 
 let instance = null;
@@ -25,7 +24,7 @@ export default class Experience extends EventEmitter {
 
     // Constants
     this.usePostProcessing = true;
-    this.usePhysics = false;
+    this.gltfImporter = true;
 
     // Global Access
     window.experience = this;
@@ -42,7 +41,7 @@ export default class Experience extends EventEmitter {
     this.camera = new Camera();
     this.renderer = new Renderer();
     if (this.usePhysics) this.physics = new Physics();
-    if (this.usePostProcessing) this.postProcess = new PostProcess();
+    if (this.usePostProcessing) this.postProcess = new RenderPipeline();
     this.world = new World();
     this.grid = new Grid(this.scene, this.camera.instance);
 

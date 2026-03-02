@@ -13,14 +13,12 @@ export default class Renderer extends EventEmitter {
     this.scene = this.experience.scene;
     this.camera = this.experience.camera;
 
-    this.setInstance();
+    this.ready = false;
 
-    this.experience.on("tick", () => {
-      this.update();
-    });
+    this.setInstance();
   }
 
-  setInstance() {
+  async setInstance() {
     this.instance = new THREE.WebGPURenderer({
       canvas: this.canvas,
       antialias: true,
@@ -33,6 +31,15 @@ export default class Renderer extends EventEmitter {
     this.instance.toneMappingExposure = 1;
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // WebGPU requires explicit async initialization before rendering
+    await this.instance.init();
+
+    this.ready = true;
+
+    this.experience.on("tick", () => {
+      this.update();
+    });
   }
 
   resize() {
@@ -41,6 +48,7 @@ export default class Renderer extends EventEmitter {
   }
 
   update() {
-    this.instance.renderAsync(this.scene, this.camera.instance);
+    if (!this.ready) return;
+    this.instance.render(this.scene, this.camera.instance);
   }
 }

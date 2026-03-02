@@ -14,9 +14,8 @@
     "vite": "^7.0.6"
   },
   "dependencies": {
-    "@dimforge/rapier3d-compat": "^0.18.0",
     "stats.js": "^0.17.0",
-    "three": "^0.178.0",
+    "three": "^0.183.2",
     "tweakpane": "^4.0.5"
   }
 }

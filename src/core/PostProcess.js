@@ -5,7 +5,7 @@ import { ssr } from "three/addons/tsl/display/SSRNode.js";
 import { smaa } from "three/addons/tsl/display/SMAANode.js";
 import Experience from "./Experience";
 
-export default class PostProcess {
+export default class RenderPipeline {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
@@ -26,7 +26,7 @@ export default class PostProcess {
           normal: TSL.transformedNormalView,
           metalness: TSL.metalness,
           emissive: TSL.emissive,
-        })
+        }),
       );
 
       const scenePassColor = scenePass.getTextureNode("output");
@@ -40,7 +40,7 @@ export default class PostProcess {
         scenePassDepth,
         scenePassNormal,
         scenePassMetalness,
-        this.camera
+        this.camera,
       );
       ssrPass.resolutionScale = 1.0;
       ssrPass.maxDistance.value = 1.5;
@@ -50,19 +50,19 @@ export default class PostProcess {
       const bloomPass = bloom(scenePassEmissive, 5.0, 1.0, 0.6);
 
       const outputNode = smaa(
-        TSL.blendColor(scenePassColor.add(bloomPass), ssrPass)
+        TSL.blendColor(scenePassColor.add(bloomPass), ssrPass),
       );
 
-      const postProcessing = new THREE.PostProcessing(this.renderer);
-      postProcessing.outputNode = outputNode;
+      const renderPipeline = new THREE.RenderPipeline(this.renderer);
+      renderPipeline.outputNode = outputNode;
     });
   }
 
   resize() {}
 
   update() {
-    if (this.postProcessing) {
-      this.postProcessing.renderAsync();
+    if (this.renderPipeline) {
+      this.renderPipeline.renderAsync();
     }
   }
 }

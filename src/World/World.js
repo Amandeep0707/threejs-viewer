@@ -22,9 +22,6 @@ export default class World {
 
   init() {
     this.resources.on("glbLoaded", (gltf) => {
-      console.log("Generator: ", gltf.asset.generator);
-      console.log("Version: ", gltf.asset.version);
-
       console.log(gltf);
 
       if (gltf.parser.extensions.KHR_draco_mesh_compression) {
