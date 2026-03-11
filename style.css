@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html,
@@ -9,12 +10,66 @@ body {
   background-color: rgb(40, 40, 40);
   height: 100%;
   font-size: 9px;
+  font-family: sans-serif;
 }
 
-.webgl
-{
-  position: fixed;
-  top: 0;
-  left: 0;
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #202020;
+}
+
+.canvas-container {
+  flex: 1 1 70%;
+  min-height: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.threejs-canvas {
+  display: block;
+  background-color: #272727;
+  width: 100%;
+  height: 100%;
   outline: none;
+}
+
+.resizer {
+  height: 8px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  cursor: ns-resize;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.15s ease-in-out;
+}
+
+.resizer:hover,
+.resizer:active {
+  background-color: #333;
+}
+
+.resizer::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 2px;
+  background-color: #777;
+  border-radius: 2px;
+}
+
+.node-editor {
+  flex: 1 1 30%;
+  min-height: 100px;
+  background-color: #272727;
+  color: #ccc;
+  padding: 2rem;
+  font-size: 1.2rem;
+  overflow: auto;
+  user-select: none;
 }

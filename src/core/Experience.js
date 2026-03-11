@@ -10,6 +10,7 @@ import Resources from "../Utils/Resources.js";
 import sources from "../core/sources.js";
 import RenderPipeline from "../core/PostProcess.js";
 import Grid from "../Utils/Grid.js";
+import MouseEvents from "../Utils/MouseEvents.js";
 
 let instance = null;
 
@@ -30,12 +31,13 @@ export default class Experience extends EventEmitter {
     window.experience = this;
 
     // Options
-    this.canvas = canvas;
+    this.canvas = canvas; //Renderer will use this
 
     // Setup
     this.debug = new Debug();
     this.sizes = new Sizes();
     this.time = new Time();
+    this.mouseEvents = new MouseEvents();
     this.scene = new THREE.Scene();
     this.resources = new Resources(sources);
     this.camera = new Camera();

@@ -15,8 +15,8 @@ export default [
     path: "textures/environments/lighting.hdr",
   },
   {
-    name: "asciiTexture",
-    type: "texture",
-    path: "textures/fillASCII.png",
+    name: "gymMachine",
+    type: "gltfModel",
+    path: "models/GYM Machine.glb",
   },
 ];

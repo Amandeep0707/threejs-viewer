@@ -22,15 +22,15 @@ export default class Camera {
       65,
       this.sizes.width / this.sizes.height,
       this.nearClip,
-      this.farClip
+      this.farClip,
     );
-    this.instance.position.set(0, 2, 5);
-    this.instance.lookAt(0, 0, 0);
+    this.instance.position.set(0, 1, 3);
   }
 
   setOrbitControls() {
     this.controls = new OrbitControls(this.instance, this.canvas);
     this.controls.enabled = true;
+    this.controls.target = new THREE.Vector3(0, 1, 0);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.2;
   }

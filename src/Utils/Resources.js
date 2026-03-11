@@ -11,6 +11,7 @@ export default class Resources extends EventEmitter {
     super();
 
     this.experience = new Experience();
+    this.scene = this.experience.scene;
 
     // Options
     this.sources = sources;
@@ -44,6 +45,7 @@ export default class Resources extends EventEmitter {
       if (source.type === "gltfModel") {
         this.loaders.gltfLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
+          this.scene.add(file.scene);
         });
       } else if (source.type === "texture") {
         this.loaders.textureLoader.load(source.path, (file) => {

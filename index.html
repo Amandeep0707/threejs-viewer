@@ -4,10 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Threejs Test</title>
+    <title>Threejs Viewer</title>
   </head>
   <body>
-    <canvas class="webgl" id="root"></canvas>
+    <div class="app-container">
+      <div class="canvas-container">
+        <canvas class="threejs-canvas" id="root"></canvas>
+      </div>
+
+      <div class="resizer" id="resizer"></div>
+
+      <div class="node-editor">
+        <h2>Node Editor</h2>
+      </div>
+    </div>
+
     <script type="module" src="/main.js"></script>
   </body>
 </html>
