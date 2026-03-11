@@ -29,8 +29,11 @@ export default class MouseEvents {
       if (newHeight < minHeight) newHeight = minHeight;
       if (newHeight > maxHeight) newHeight = maxHeight;
 
-      // Apply height as fixed to top panel, let bottom panel auto-fill the rest
-      topPanel.style.flex = `0 0 ${newHeight}px`;
+      // Use percentages for flex-basis so it stays responsive to window resizing
+      const percentage = (newHeight / containerRect.height) * 100;
+
+      // Apply height as percentage to top panel, let bottom panel auto-fill the rest
+      topPanel.style.flex = `0 0 ${percentage}%`;
       bottomPanel.style.flex = `1 1 auto`;
     });
 
