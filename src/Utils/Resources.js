@@ -1,4 +1,5 @@
 import * as THREE from "three/webgpu";
+import * as TSL from "three/tsl";
 import EventEmitter from "./EventEmitter";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
@@ -49,7 +50,21 @@ export default class Resources extends EventEmitter {
         });
       } else if (source.type === "texture") {
         this.loaders.textureLoader.load(source.path, (file) => {
-          this.sourceLoaded(source, file);
+          let tslNode = null;
+          if (source.textureType === "color") {
+            file.colorSpace = THREE.SRGBColorSpace;
+            tslNode = TSL.texture(file);
+          } else if (source.textureType === "mask") {
+            file.colorSpace = THREE.LinearSRGBColorSpace;
+            tslNode = TSL.texture(file);
+          } else if (source.textureType === "normal") {
+            file.colorSpace = THREE.LinearSRGBColorSpace;
+            tslNode = TSL.normalMap(TSL.texture(file));
+          } else {
+            tslNode = TSL.texture(file);
+          }
+
+          this.sourceLoaded(source, tslNode);
         });
       } else if (source.type === "cubeTexture") {
         this.loaders.cubeTextureLoader.load(source.path, (file) => {
@@ -69,11 +84,16 @@ export default class Resources extends EventEmitter {
 
   sourceLoaded(source, file) {
     this.items[source.name] = file;
-
     this.loaded++;
 
     if (this.loaded === this.toLoad) {
-      this.trigger("ready");
+      const allGltfModelsValid = this.sources
+        .filter((s) => s.type === "gltfModel")
+        .every((s) => this.items[s.name] && this.items[s.name].scene);
+
+      if (allGltfModelsValid) {
+        this.trigger("ready");
+      }
     }
 
     this.trigger("sourceLoaded", { source, file });

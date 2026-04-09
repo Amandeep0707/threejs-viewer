@@ -27,7 +27,7 @@ export default class Environment {
     this.environmentMap.intensity = 1;
 
     this.scene.environmentNode = TSL.pmremTexture(
-      this.resources.items.environmentMapTexture
+      this.resources.items.environmentMapTexture,
     );
 
     this.environmentMap.updateMaterial = () => {

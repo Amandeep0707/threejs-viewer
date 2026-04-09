@@ -64,11 +64,13 @@ export default class Experience extends EventEmitter {
     this.time.on("tick", () => {
       this.update();
     });
+
+    this.resources.on("ready", () => {
+      this.world.init();
+    });
   }
 
-  init() {
-    this.world.init();
-  }
+  init() {}
 
   resize() {
     this.camera.resize();
