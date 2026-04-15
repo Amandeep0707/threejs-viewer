@@ -10,7 +10,7 @@ export default class Camera {
     this.canvas = this.experience.canvas;
 
     // Constants
-    this.nearClip = 0.1;
+    this.nearClip = 0.01;
     this.farClip = 100;
 
     this.setInstance();
@@ -19,7 +19,7 @@ export default class Camera {
 
   setInstance() {
     this.instance = new THREE.PerspectiveCamera(
-      65,
+      50,
       this.sizes.width / this.sizes.height,
       this.nearClip,
       this.farClip,
